@@ -270,3 +270,45 @@ button {
     rgba(10, 10, 10, 0.85) 100%
   );
 }
+
+/* ─── Input placeholder ─────────────────────────────────────────────────────── */
+input::placeholder {
+  color: rgba(248, 244, 237, 0.28);
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+input:focus {
+  outline: none;
+}
+
+/* ─── Section separator pulse ───────────────────────────────────────────────── */
+.section-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 169, 110, 0.2),
+    transparent
+  );
+}
+
+/* ─── Hover link underline slide ────────────────────────────────────────────── */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
