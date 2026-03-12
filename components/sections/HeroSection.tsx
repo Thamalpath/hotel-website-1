@@ -106,18 +106,18 @@ function ScrollIndicator() {
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [mounted, setMounted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [videoError, setVideoError] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const springX = useSpring(mouseX, { stiffness: 60, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
 
   /* ── Parallax on scroll ───────────────────────────────────────────────── */
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: mounted ? containerRef : undefined,
     offset: ["start start", "end start"],
   });
 
@@ -137,6 +137,7 @@ export default function HeroSection() {
 
   /* ── Video playback ──────────────────────────────────────────────────── */
   useEffect(() => {
+    setMounted(true);
     const vid = videoRef.current;
     if (!vid) return;
     vid.muted = true;
@@ -226,7 +227,7 @@ export default function HeroSection() {
           >
             {/* Primary: Pexels luxury hotel MP4 (free use) */}
             <source
-              src="https://videos.pexels.com/video-files/3163534/3163534-uhd_2560_1440_25fps.mp4"
+              src="https://videos.pexels.com/video-files/8089491/8089491-uhd_2560_1440_25fps.mp4"
               type="video/mp4"
             />
             {/* Fallback */}
@@ -300,6 +301,7 @@ export default function HeroSection() {
               <div
                 style={{
                   width: 32,
+                  height: 1,
                   background: "linear-gradient(to right, #c9a96e, transparent)",
                 }}
               />

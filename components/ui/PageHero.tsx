@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { EASE_OUT_EXPO } from "@/lib/motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface PageHeroProps {
   eyebrow: string;
-  title: string[]; // each string is one animated line
-  accentIdx?: number; // which line gets gold italic treatment
+  title: string[];
+  accentIdx?: number;
   subtitle?: string;
   image: string;
   imageAlt: string;
@@ -23,8 +23,14 @@ export default function PageHero({
   imageAlt,
 }: PageHeroProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: mounted ? ref : undefined,
     offset: ["start start", "end start"],
   });
 
@@ -37,10 +43,12 @@ export default function PageHero({
       ref={ref}
       style={{
         position: "relative",
-        height: "clamp(440px, 56vh, 680px)",
+        height: "clamp(480px, 60vh, 720px)",
         overflow: "hidden",
         display: "flex",
-        alignItems: "flex-end",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        paddingTop: "clamp(100px, 12vh, 200px)",
       }}
     >
       {/* Parallax background */}
