@@ -36,7 +36,7 @@ export default function GoldButton({
     padding,
     fontSize,
     fontFamily: "var(--font-body)",
-    fontWeight: 500,
+    fontWeight: 600,
     letterSpacing: "0.2em",
     textTransform: "uppercase",
     textDecoration: "none",
@@ -50,22 +50,25 @@ export default function GoldButton({
     variant === "solid"
       ? {
           background:
-            "linear-gradient(105deg, #9a7a4a 0%, #c9a96e 40%, #e8d5aa 60%, #c9a96e 80%, #9a7a4a 100%)",
+            "linear-gradient(105deg,#9a7a4a 0%,#c9a96e 40%,#e8d5aa 60%,#c9a96e 80%,#9a7a4a 100%)",
           backgroundSize: "250% auto",
           color: "#0a0a0a",
           border: "none",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
         }
       : variant === "outline"
         ? {
-            background: "transparent",
-            color: "#c9a96e",
-            border: "1px solid rgba(201, 169, 110, 0.6)",
+            background: "rgba(10,10,10,0.25)",
+            backdropFilter: "blur(2px)",
+            WebkitBackdropFilter: "blur(2px)",
+            color: "#e8d5aa",
+            border: "1px solid rgba(201,169,110,0.8)",
           }
         : {
             background: "transparent",
-            color: "#c9a96e",
-            border: "none",
-            padding: `${padding} 0`,
+            color: "#e8d5aa",
+            borderBottom: "1px solid rgba(201,169,110,0.7)",
+            padding: `${padding}`,
           };
 
   const content = (
