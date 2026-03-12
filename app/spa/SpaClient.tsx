@@ -1,18 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import PageHero from "@/components/ui/PageHero";
-import {
-  FadeUp,
-  SlideLeft,
-  SlideRight,
-  ScaleIn,
-  FadeIn,
-} from "@/components/ui/Reveal";
+import Image from "next/image";
 import { EASE_OUT_EXPO } from "@/lib/motion";
+import PageHero from "@/components/ui/PageHero";
+import { motion, useInView } from "framer-motion";
+import { FadeUp, SlideLeft, SlideRight } from "@/components/ui/Reveal";
 
 const TREATMENTS = [
   {
@@ -216,12 +210,11 @@ function TreatmentCard({ t, i }: { t: (typeof TREATMENTS)[0]; i: number }) {
 }
 
 export default function SpaClient() {
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: parallaxRef,
-    offset: ["start end", "end start"],
-  });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <main style={{ background: "#0a0a0a", minHeight: "100vh" }}>
