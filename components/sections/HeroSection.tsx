@@ -7,11 +7,10 @@ import {
   useTransform,
   useMotionValue,
   useSpring,
-  AnimatePresence,
 } from "framer-motion";
+import { EASE_OUT_EXPO } from "@/lib/motion";
 import GoldButton from "@/components/ui/GoldButton";
 import { HERO_VIDEO_URL, HERO_POSTER_URL, SITE } from "@/lib/constants";
-import { EASE_OUT_EXPO } from "@/lib/motion";
 
 /* ── Animated counter ──────────────────────────────────────────────────────── */
 function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
@@ -68,11 +67,12 @@ function ScrollIndicator() {
     >
       <span
         style={{
-          fontSize: 9,
+          fontSize: 10,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
           color: "rgba(232, 213, 170, 0.6)",
           fontFamily: "var(--font-body)",
+          fontWeight: 500,
         }}
       >
         Scroll
@@ -167,12 +167,13 @@ export default function HeroSection() {
       aria-label="Hero — Aurum Hotel"
       style={{
         position: "relative",
-        height: "100svh",
-        minHeight: 600,
+        minHeight: "100svh",
+        paddingTop: "clamp(96px, 12vh, 160px)",
+        paddingBottom: "clamp(40px, 8vh, 100px)",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
       }}
     >
       {/* ── Video / poster background ──────────────────────────────────── */}
@@ -276,14 +277,14 @@ export default function HeroSection() {
         <div
           className="container"
           style={{
-            paddingBottom: 80,
+            paddingBottom: "clamp(48px, 8vh, 120px)",
             display: "grid",
             gridTemplateRows: "auto auto",
-            gap: 48,
+            gap: "clamp(32px, 6vh, 64px)",
           }}
         >
           {/* Headline block */}
-          <div style={{ maxWidth: 820 }}>
+          <div style={{ maxWidth: "min(820px, 92vw)" }}>
             {/* Pre-label */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -293,13 +294,12 @@ export default function HeroSection() {
                 display: "flex",
                 alignItems: "center",
                 gap: 16,
-                marginBottom: 24,
+                marginBottom: "clamp(16px, 2.5vh, 28px)",
               }}
             >
               <div
                 style={{
                   width: 32,
-                  height: 1,
                   background: "linear-gradient(to right, #c9a96e, transparent)",
                 }}
               />
@@ -310,37 +310,35 @@ export default function HeroSection() {
                   letterSpacing: "0.35em",
                   textTransform: "uppercase",
                   color: "#c9a96e",
-                  fontWeight: 400,
+                  fontWeight: 600,
                 }}
               >
                 Since 1999 · New York
               </span>
             </motion.div>
 
-            {/* H1 — staggered lines */}
             <h1
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 300,
-                fontSize: "clamp(52px, 7vw, 110px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.02em",
+                fontWeight: 500,
+                fontSize: "clamp(48px, 8.5vw, 110px)",
+                lineHeight: 0.9,
+                letterSpacing: "-0.03em",
                 color: "#f8f4ed",
-                overflow: "hidden",
-                marginBottom: 28,
+                marginBottom: "clamp(12px, 2vh, 24px)",
               }}
             >
-              {["Where", "Luxury", "Meets", "Eternity"].map((word, i) => (
+              {SITE.tagline.split(" ").map((word, i) => (
                 <span
                   key={word}
                   style={{
-                    display: "block",
+                    display: "inline-block",
                     overflow: "hidden",
-                    lineHeight: 1.05,
+                    marginRight: "0.25em",
                   }}
                 >
                   <motion.span
-                    style={{ display: "block" }}
+                    style={{ display: "inline-block" }}
                     initial={{ y: "110%", opacity: 0 }}
                     animate={{ y: "0%", opacity: 1 }}
                     transition={{
@@ -366,12 +364,12 @@ export default function HeroSection() {
               transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 1.6 }}
               style={{
                 fontFamily: "var(--font-body)",
-                fontWeight: 300,
+                fontWeight: 400,
                 fontSize: "clamp(14px, 1.4vw, 17px)",
                 lineHeight: 1.7,
                 color: "rgba(248, 244, 237, 0.65)",
                 maxWidth: 480,
-                marginBottom: 44,
+                marginBottom: "clamp(20px, 3vh, 36px)",
               }}
             >
               An icon of refined luxury in the heart of Manhattan. Discover 180
@@ -385,15 +383,15 @@ export default function HeroSection() {
               transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: 1.9 }}
               style={{
                 display: "flex",
-                gap: 20,
+                gap: "clamp(12px, 2vw, 24px)",
                 flexWrap: "wrap",
                 alignItems: "center",
               }}
             >
-              <GoldButton href="/contact" size="lg">
+              <GoldButton href="/contact" size="sm">
                 Reserve Your Suite
               </GoldButton>
-              <GoldButton href="/rooms" variant="ghost" size="lg">
+              <GoldButton href="/rooms" variant="outline" size="sm">
                 Explore Rooms
               </GoldButton>
             </motion.div>
@@ -404,13 +402,14 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2.2 }}
+            className="hero-stats"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 0,
+              gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+              gap: "clamp(24px, 4vw, 48px)",
               borderTop: "1px solid rgba(201,169,110,0.15)",
-              paddingTop: 32,
-              maxWidth: 700,
+              paddingTop: "clamp(24px, 4vh, 40px)",
+              maxWidth: 800,
             }}
           >
             {stats.map((stat, i) => (
@@ -424,19 +423,17 @@ export default function HeroSection() {
                   ease: EASE_OUT_EXPO,
                 }}
                 style={{
-                  paddingRight: 24,
-                  borderRight:
-                    i < stats.length - 1
-                      ? "1px solid rgba(201,169,110,0.12)"
-                      : "none",
-                  paddingLeft: i > 0 ? 24 : 0,
+                  paddingRight: 12,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
                 <div
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: "clamp(28px, 2.8vw, 42px)",
-                    fontWeight: 300,
+                    fontSize: "clamp(24px, 3vw, 44px)",
+                    fontWeight: 600,
                     color: "#c9a96e",
                     lineHeight: 1,
                     marginBottom: 6,
@@ -447,6 +444,7 @@ export default function HeroSection() {
                 <div
                   style={{
                     fontSize: 10,
+                    fontWeight: 500,
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     color: "rgba(248,244,237,0.5)",
@@ -463,10 +461,11 @@ export default function HeroSection() {
 
       {/* ── Scroll indicator ───────────────────────────────────────────── */}
       <motion.div
+        className="scroll-indicator-wrap"
         style={{
           position: "absolute",
-          bottom: 40,
-          right: 64,
+          bottom: "clamp(24px, 5vh, 48px)",
+          right: "clamp(24px, 5vw, 64px)",
           zIndex: 10,
         }}
       >
@@ -474,7 +473,7 @@ export default function HeroSection() {
       </motion.div>
 
       {/* ── Year badge ─────────────────────────────────────────────────── */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, rotate: -90 }}
         animate={{ opacity: 1, rotate: -90 }}
         transition={{ delay: 2.5, duration: 0.8, ease: EASE_OUT_EXPO }}
@@ -484,26 +483,35 @@ export default function HeroSection() {
           top: "50%",
           translateY: "-50%",
           zIndex: 10,
-          fontSize: 9,
+          fontSize: 10,
           letterSpacing: "0.4em",
           textTransform: "uppercase",
           color: "rgba(201,169,110,0.45)",
           fontFamily: "var(--font-body)",
+          fontWeight: 400,
           whiteSpace: "nowrap",
         }}
       >
         {SITE.address}
-      </motion.div>
+      </motion.div> */}
 
       {/* ── Responsive styles ──────────────────────────────────────────── */}
       <style>{`
-        @media (max-width: 768px) {
-          /* Stack stats 2×2 */
-          .hero-stats { grid-template-columns: repeat(2, 1fr) !important; }
+        @media (max-width: 1024px) {
+          .hero-stats { 
+            grid-template-columns: repeat(2, 1fr) !important;
+            max-width: 100% !important;
+          }
         }
-        @media (max-width: 480px) {
-          /* Single column stats */
-          .hero-stats { grid-template-columns: repeat(2, 1fr) !important; }
+        @media (max-width: 640px) {
+          .scroll-indicator-wrap {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+          }
+          .hero-stats {
+            gap: 24px !important;
+          }
         }
       `}</style>
     </section>
